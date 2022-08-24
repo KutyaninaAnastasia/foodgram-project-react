@@ -2,12 +2,12 @@ from djoser.serializers import UserCreateSerializer, UserSerializer
 from rest_framework import serializers
 
 from recipes.models import Recipe
-from .models import Follow, CustomUser
+from .models import Follow, User
 
 
 class CustomUserCreateSerializer(UserCreateSerializer):
     class Meta:
-        model = CustomUser
+        model = User
         fields = ('email', 'id', 'password',
                   'username', 'first_name', 'last_name')
 
@@ -16,7 +16,7 @@ class CustomUserSerializer(UserSerializer):
     is_subscribed = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ('email', 'id', 'username',
                   'first_name', 'last_name', 'is_subscribed')
 
@@ -38,7 +38,7 @@ class FollowSerializer(CustomUserSerializer):
     recipes_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ('email', 'id', 'username', 'first_name', 'last_name',
                   'is_subscribed', 'recipes', 'recipes_count')
 

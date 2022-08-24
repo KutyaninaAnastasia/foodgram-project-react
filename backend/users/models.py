@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-class CustomUser(AbstractUser):
+class User(AbstractUser):
     email = models.EmailField(
         verbose_name='e-mail',
         max_length=254,
@@ -38,13 +38,13 @@ class CustomUser(AbstractUser):
 
 class Follow(models.Model):
     user = models.ForeignKey(
-        CustomUser,
+        User,
         on_delete=models.CASCADE,
         related_name='follower',
         verbose_name='Пользователь'
     )
     following = models.ForeignKey(
-        CustomUser,
+        User,
         on_delete=models.CASCADE,
         related_name='following',
         verbose_name='Автор'

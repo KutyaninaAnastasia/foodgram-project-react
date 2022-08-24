@@ -4,12 +4,12 @@ from rest_framework.generics import get_object_or_404, ListAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 
-from .models import CustomUser, Follow
+from .models import User, Follow
 from .serializers import CustomUserSerializer, FollowSerializer
 
 
 class CustomUserViewSet(UserViewSet):
-    queryset = CustomUser.objects.all()
+    queryset = User.objects.all()
     permission_classes = (permissions.IsAuthenticated, )
     serializer_class = CustomUserSerializer
 
@@ -31,7 +31,7 @@ class FollowApiView(views.APIView):
                 {'error': 'Вы уже подписаны на пользователя'},
                 status=status.HTTP_400_BAD_REQUEST
             )
-        author = get_object_or_404(CustomUser, id=user_id)
+        author = get_object_or_404(User, id=user_id)
         Follow.objects.create(
             user=request.user,
             following_id=user_id
@@ -43,7 +43,7 @@ class FollowApiView(views.APIView):
 
     def delete(self, request, *args, **kwargs):
         user_id = self.kwargs.get('user_id')
-        get_object_or_404(CustomUser, id=user_id)
+        get_object_or_404(User, id=user_id)
         subscription = Follow.objects.filter(
             user=request.user,
             following_id=user_id
@@ -63,4 +63,4 @@ class ListFollowViewSet(ListAPIView):
     pagination_class = LimitOffsetPagination
 
     def get_queryset(self):
-        return CustomUser.objects.filter(following__user=self.request.user)
+        return User.objects.filter(following__user=self.request.user)

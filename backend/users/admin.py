@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Follow, CustomUser
+from .models import Follow, User
 
 
-class CustomUserAdmin(admin.ModelAdmin):
+class UserAdmin(admin.ModelAdmin):
     list_display = (
         'pk', 'username', 'email',
         'first_name', 'last_name')
@@ -19,5 +19,5 @@ class FollowAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(User, UserAdmin)
 admin.site.register(Follow, FollowAdmin)
