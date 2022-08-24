@@ -11,7 +11,6 @@ router.register('tags', TagViewSet, basename='tags')
 router.register('ingredients', IngredientViewSet, basename='ingredients')
 router.register('recipes', RecipeViewSet, basename='recipes')
 
-
 urlpatterns = [
     path('recipes/download_shopping_cart/',
          DownloadShoppingCart.as_view(), name='download_shoppinglist'),

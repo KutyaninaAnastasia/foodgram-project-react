@@ -8,12 +8,10 @@ load_dotenv(dotenv_path=env_path)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 SECRET_KEY = os.getenv(
     'SECRET_KEY',
     default='r6*)g9%6rx0$g3wtukj2!(gli91a0u7v5pk-9&mxq&wia$=aw7'
 )
-
 
 DEBUG = False
 
@@ -65,7 +63,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'foodgram.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE',
@@ -83,7 +80,6 @@ DATABASES = {
     }
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -98,7 +94,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 LANGUAGE_CODE = 'en-us'
 
