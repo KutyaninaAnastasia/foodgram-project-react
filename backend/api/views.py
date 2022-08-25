@@ -97,14 +97,14 @@ class DownloadShoppingCart(views.APIView):
     pagination_class = None
 
     def get(self, request):
-        final_list = {}
+        final_cart = {}
         ingredients = AmountIngredient.objects.filter(
             recipe__shoppingcart__user=request.user).values(
             'ingredient__name', 'ingredient__measurement_unit').annotate(
             total=Sum('amount')).order_by('ingredient__name')
         for item in ingredients:
             name = item['ingredient__name']
-            final_list[name] = {
+            final_cart[name] = {
                 'measurement_unit': item['ingredient__measurement_unit'],
                 'total': item['total']
             }
@@ -118,7 +118,7 @@ class DownloadShoppingCart(views.APIView):
         page.drawString(200, 800, 'Список покупок')
         page.setFont('RobotoItalic', size=18)
         height = 750
-        for i, (name, data) in enumerate(final_list.items(), 1):
+        for i, (name, data) in enumerate(final_cart.items(), 1):
             page.drawString(75, height, (f'{i}. {name} - {data["total"]} '
                                          f'{data["measurement_unit"]}'))
             height -= 25

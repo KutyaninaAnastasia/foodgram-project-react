@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404
 from drf_extra_fields.fields import Base64ImageField
-
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
@@ -101,27 +100,32 @@ class RecipeSerializer(serializers.ModelSerializer):
         if not ingredients:
             raise serializers.ValidationError({
                 'ingredients': 'Укажите хотя бы один ингредиент'})
-        ingredient_list = []
+        unique_ingredients = []
         for ingredient_item in ingredients:
             ingredient = get_object_or_404(Ingredient,
                                            id=ingredient_item['id'])
-            if ingredient in ingredient_list:
+            if ingredient in unique_ingredients:
                 raise serializers.ValidationError(
                     'Ингредиенты должны быть уникальными')
-            ingredient_list.append(ingredient)
+            unique_ingredients.append(ingredient)
             if int(ingredient_item['amount']) < 0:
                 raise serializers.ValidationError({
                     'ingredients': (
                         'Количество ингредиента должно быть больше 0')
                 })
         tags = data['tags']
+        unique_tags = []
         if not tags:
             raise serializers.ValidationError(
                 'Укажите хотя бы один тег')
-        for tag_name in tags:
-            if not Tag.objects.filter(name=tag_name).exists():
+        for tag in tags:
+            if not Tag.objects.filter(name=tag).exists():
                 raise serializers.ValidationError(
-                    f'Тега {tag_name} не существует!')
+                    f'Тега {tag} не существует')
+            if tag in unique_tags:
+                raise serializers.ValidationError(
+                    'Теги должны быть уникальными')
+            unique_tags.append(tag)
         return data
 
     def create_ingredients(self, ingredients, recipe):
