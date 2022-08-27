@@ -10,6 +10,11 @@ class Tag(models.Model):
     YELLOW = '#fff44f'
     ORANGE = '#ffcc00'
     PINK = '#fb7efd'
+    LIGHTGREEN = '#99ff99'
+    MUSTARD = '#ffdb58'
+    PEACH = '#ffe5b4'
+    MARSALA = '#ad655f'
+    PURPLE = '#ba7fa2'
 
     COLOR_CHOICES = [
         (GREEN, 'Зеленый'),
@@ -17,6 +22,12 @@ class Tag(models.Model):
         (YELLOW, 'Желтый'),
         (ORANGE, 'Оранжевый'),
         (PINK, 'Розовый'),
+        (LIGHTGREEN, 'Салатовый'),
+        (MUSTARD, 'Горчичный'),
+        (PEACH, 'Персиковый'),
+        (MARSALA, 'Марсала'),
+        (PURPLE, 'Пурпурный')
+
     ]
     name = models.CharField(
         max_length=200,
